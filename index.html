@@ -1,288 +1,464 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<html lang="en">
+
 <head>
-<style type="text/css">
-.inline {
-  background-color: #f7f7f7;
-  border:solid 1px #B0B0B0;
-}
-.error {
-	font-weight: bold;
-	color: #FF0000;
-}
-.warning {
-	font-weight: bold;
-}
-.message {
-	font-style: italic;
-}
-.source, .output, .warning, .error, .message {
-	padding: 0 1em;
-  border:solid 1px #F7F7F7;
-}
-.source {
-  background-color: #f5f5f5;
-}
-.left {
-  text-align: left;
-}
-.right {
-  text-align: right;
-}
-.center {
-  text-align: center;
-}
-.hl.num {
-  color: #AF0F91;
-}
-.hl.str {
-  color: #317ECC;
-}
-.hl.com {
-  color: #AD95AF;
-  font-style: italic;
-}
-.hl.opt {
-  color: #000000;
-}
-.hl.std {
-  color: #585858;
-}
-.hl.kwa {
-  color: #295F94;
-  font-weight: bold;
-}
-.hl.kwb {
-  color: #B05A65;
-}
-.hl.kwc {
-  color: #55aa55;
-}
-.hl.kwd {
-  color: #BC5A65;
-  font-weight: bold;
-}
-</style>
 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
+  <title>Interactive Systematic Review and Map Flow Charts</title>
 
-	<style type="text/css" media="screen">
-	
-		* {margin: 10; padding: 0;}
+  <!-- Bootstrap Core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-		.tree ul {
-			padding-top: 20px; position: relative;
-	
-			-webkit-transition: all 0.5s;
-			-moz-transition: all 0.5s;
-			transition: all 0.5s;
-		}
+  <!-- Custom Fonts -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
-		.tree li {
-			display: inline-block; text-align: center;
-			list-style-type: none;
-			position: relative;
-			padding: 20px 5px 0 5px;
-	
-			-webkit-transition: all 0.5s;
-			-moz-transition: all 0.5s;
-			transition: all 0.5s;
-		}
+  <!-- Custom CSS -->
+  <link href="css/stylish-portfolio.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-		/*We will use ::before and ::after to draw the connectors*/
-
-		.tree li::before, .tree li::after{
-			content: '';
-			position: absolute; top: 0; right: 50%;
-			border-top: 1px solid #ccc;
-			width: 50%; height: 45px;
-			z-index: -1;
-		}
-		.tree li::after{
-			right: auto; left: 50%;
-			border-left: 1px solid #ccc;
-		}
-
-		/*We need to remove left-right connectors from elements without 
-		any siblings*/
-		.tree li:only-child::after, .tree li:only-child::before {
-			display: none;
-		}
-
-		/*Remove space from the top of single children*/
-		.tree li:only-child{ padding-top: 0;}
-
-		/*Remove left connector from first child and 
-		right connector from last child*/
-		.tree li:first-child::before, .tree li:last-child::after{
-			border: 0 none;
-		}
-		/*Adding back the vertical connector to the last nodes*/
-		.tree li:last-child::before{
-			border-right: 1px solid #ccc;
-			border-radius: 0 5px 0 0;
-			
-			-webkit-transform: translateX(1px);
-			-moz-transform: translateX(1px);
-			transform: translateX(1px);
-			
-			-webkit-border-radius: 0 5px 0 0;
-			-moz-border-radius: 0 5px 0 0;
-			border-radius: 0 5px 0 0;
-		}
-		.tree li:first-child::after{
-			border-radius: 5px 0 0 0;
-			-webkit-border-radius: 5px 0 0 0;
-			-moz-border-radius: 5px 0 0 0;
-		}
-
-		/*Time to add downward connectors from parents*/
-		.tree ul ul::before{
-			content: '';
-			position: absolute; top: -12px; left: 50%;
-			border-left: 1px solid #ccc;
-			width: 0; height: 32px;
-			z-index: -1;
-		}
-
-		.tree li a{
-			border: 1px solid #ccc;
-			padding: 5px 10px;
-			text-decoration: none;
-			color: #666;
-			font-family: arial, verdana, tahoma;
-			font-size: 11px;
-			display: inline-block;
-			background: white;
-	
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
-	
-			-webkit-transition: all 0.5s;
-			-moz-transition: all 0.5s;
-			transition: all 0.5s;
-		}
-		.tree li a+a {
-			margin-left: 20px;
-			position: relative;
-		}
-		.tree li a+a::before {
-			content: '';
-			position: absolute;
-			border-top: 1px solid #ccc;
-			top: 50%; left: -21px; 
-			width: 20px;
-		}
-
-		/*Time for some hover effects*/
-		/*We will apply the hover effect the the lineage of the element also*/
-		.tree li a:hover{
-			background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
-		}
-
-		{
-			border-color: #94a0b4;
-		}
-		
-		
-    		/* Tooltip container */
-    .tooltip {
-      position: relative;
-      display: inline-block;
+  <style>
+    hr {
+      height: 1px;
+      color: #ffffff;
+      background-color: #ffffff;
+      border: none;
+    }
+  
+    .center {
+      float: right;
+      width: 300px;
+      padding: 10px;
     }
     
-    /* Tooltip text */
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 160px;
-      background-color: grey;
-      color: #fff;
-      text-align: center;
-      padding: 5px 0;
-      border-radius: 6px;
-     
-      /* Position the tooltip text - See examples below! */
+      svg {
+        display: block;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      
+        video {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    header {
+      position: relative;
+      background-color: black;
+      height: 75vh;
+      min-height: 25rem;
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    header video {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: 0;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+    }
+    
+    header .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    header .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: grey;
+      opacity: 0.5;
       z-index: 1;
     }
     
-    /* Show the tooltip text when you mouse over the tooltip container */
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
+    @media (pointer: coarse) and (hover: none) {
+      header {
+        background: url('https://github.com/SRflowdiagram/SRflowdiagram.github.io/img/masthead.png') black no-repeat center center scroll;
+      }
+      header video {
+        display: none;
+      }
     }
-		
-		.tree li .exclusion {
-		  background-color: #ffe6e6
-		}
-		
-		.tree li .input {
-		  background-color: #e5f3e8
-		}
-		
-		.tree li .output {
-		  background-color: #e4f4f6
-		}
-		
-	</style>
-</head>
-<body>
+    
+    .accordion {
+    box-sizing: border-box;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    width: 100%;
+    }
+    
+    .accordion-select {
+        cursor: pointer;
+        margin: 0;
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    .accordion-title {
+        position: relative;
+    }
+    
+    .accordion-title:not(:nth-last-child(2))::after {
+        border: 1px solid transparent;
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    
+    .accordion-title span {
+        bottom: 0px;
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        white-space: nowrap;
+        width: 100%;
+    }
+    
+    .accordion-content {
+        box-sizing: border-box;
+        overflow: auto;
+        position: relative;
+        transition: margin 0.3s ease 0.1s;
+    }
+    
+    .accordion-select:checked + .accordion-title + .accordion-content {
+        margin-bottom: 0;
+        margin-right: 0;
+    }
+    
+    /* Generated styles starts here */
+    
+    .accordion {
+        border-color: #dedede;
+        border-radius: 8px;
+        border-style: solid;
+        border-width: 1px;
+        flex-direction: row;
+        height: 1000px;
+    } 
+    
+    .accordion-title,
+    .accordion-select  {
+        background-color: #f7f7f7;
+        color: #7f8787;
+        width: 65px;
+        height: 100%;
+        font-size: 15px;
+    }
+    
+    .accordion-select {
+        margin-bottom: -65px;
+        margin-right: -65px;
+    }
+    
+    .accordion-title:not(:nth-last-child(2))::after {
+        border-bottom-color: transparent;
+        border-right-color: rgb(234, 234, 234);
+    } 
+    
+    .accordion-select:hover + .accordion-title,
+    .accordion-select:checked + .accordion-title {
+        background-color: #979797;
+        color: #ffffff;
+    } 
+    
+     .accordion-title span  {	
+        transform: rotate(-90deg);
+        -ms-writing-mode: lr-bt;
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+        padding-bottom: 33px;
+        padding-top: 33px;
+        line-height: 65px;
+    } 
+    
+    .accordion-content {
+        background-color: #ffffff;
+        color: #7f8787;
+        height: 100%;
+        margin-bottom: 0;
+        margin-right: calc(-1 * calc(100% - 130px));
+        padding: 30px;
+        width: calc(100% - 130px);
+    } 
+  </style>
 
-  	  <div class="tree">
-  	    <h2><a href="interactive.html" target="_blank">Click here to visit the interactive version</a></h2>
-  		<ul>
-  			<li>
-  				<a href="#" class="tooltip input">Bibliographic database search results<br>n = 31,341<span class="tooltiptext">Click to see details of bibliographic database searching</span></a><a href="#" class="tooltip input"><font color="e5f3e8">. .</font>Search results from other sources<font color="e5f3e8">. .</font><br>n = 417<span class="tooltiptext">Click to see details of searches of other sources</span></a>
-  				<ul>
-  					<li>
-  						<a href="#" class="tooltip">Records after duplicates removed<br>n = 19,874<span class="tooltiptext">Click to see details of duplicate removal</span></a><a href="#" class="tooltip exclusion">Duplicates<br>n = 11,884<span class="tooltiptext">Click to see details of duplicate removal</span></a>
-  						<ul>
-  							<li>
-  								<a href="#" class="tooltip">Records after title screening<br>n = 8,511<span class="tooltiptext">Click to see details of title screening</span></a><a href="#" class="tooltip exclusion">Excluded titles<br>n = 11,363<span class="tooltiptext">Click to see list of excluded titles</span></a>
-  								<ul>
-  							    <li>
-  								    <a href="#" class="tooltip">Records after abstract screening<br>n = 3,417<span class="tooltiptext">Click to see details of abstract screening</span></a><a href="#" class="tooltip exclusion">Excluded abstracts<br>n = 5,094<span class="tooltiptext">Click to see list of excluded abstracts</span></a>
-  							      <ul>
-  						          <li>
-  							          <a href="#" class="tooltip">Records after full text retrieval<br>n = 2,294<span class="tooltiptext">Click to see details of full text retrieval</span></a><a href="#" class="tooltip exclusion">Inaccessible, n = 276<br>Not found, n = 847<span class="tooltiptext">Click to see list of non-retrievable full texts</span></a>
-  						            <ul>
-  					                <li>
-  						                <a href="#" class="tooltip">Records after full text screening<br>n = 1,202<span class="tooltiptext">Click to see details of full text screening</span></a><a href="#" class="tooltip exclusion">Excluded full texts<br>n = 1,092<span class="tooltiptext">Click to see list of excluded full texts, with reasons</span></a>
-  								            <ul>
-  							                <li>
-  								                <a href="#" class="tooltip">Articles / Studies included after full text screening<br>n articles / n studies = 1,053 / 1,072<span class="tooltiptext">Click to see list of included articles</span></a>
-  								                <ul>
-  							                    <li>
-  								                    <a href="#" class="tooltip">Studies included after critical appraisal<br>n = 702<span class="tooltiptext">Click to see details of critical appraisal</span></a><a href="#" class="tooltip exclusion">Excluded studies<br>n = 370<span class="tooltiptext">Click to see list of excluded studies, with appraisal judegments</span></a>
-      								                <ul>
-      							                    <li>
-      								                    <a href="#" class="tooltip">Studies included in narrative synthesis<br>n = 702<span class="tooltiptext">Click to see details of narrative synthesis</span></a>
-      								                    <ul>
-      							                        <li>
-      								                        <a href="#" class="tooltip output">Studies included in full synthesis<br>n = 467<span class="tooltiptext">Click to see details of full synthesis</span></a><a href="#" class="tooltip exclusion">Excluded studies<br>n = 235<span class="tooltiptext">Click to see list of studies not included in full synthesis, with reasons</span></a>
-      								
-    			                                  </li>
-  	                                      </ul>
-    			                              </li>
-    	                                </ul>
-  							                    </li>
-  					                      </ul>
-  							                </li>
-  						                </ul>
-  					                </li>
-  				                </ul>
-  						          </li>
-  					          </ul>
-  							    </li>
-  						    </ul>
-  							</li>
-  						</ul>
-  					</li>
-  				</ul>
-  			</li>
-  				
-  		</ul>
-  		</div>
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <a class="menu-toggle rounded" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a class="js-scroll-trigger" href="#page-top">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#about">About</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#flowcharts">Flow Charts</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#contact">Contact</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <header>
+  <div class="overlay" align=center></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+      <source src="img/bg-masthead.mp4" type="video/mp4">
+    </video>
+    <div class="container h-100">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-white">
+          <h1 class="mb-1">Systematic Review<br>
+          Flow Charts</h1>
+          <h3 class="mb-5">
+          <em>Free, interactive flow charts for your systematic review</em>
+          </h3>
+          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section class="content-section bg-light" id="about">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h2>Interactive flow charts that conform to internationally recognised reporting standards</h2><br>
+          <p class="lead mb-5">Interactivity allows the charts to be embedded in a website, linking the reader instantly with more information on the methods used and the results found. Static versions can be used for documents.</p>
+          <p class="lead mb-5">The flow charts have been designed to conform to <a href="https://roses-reporting.com" target="_blank">ROSES</a> and <a href="http://www.prisma-statement.org/" target="_blank">PRISMA</a> reporting standards.</p>
+          <p class="lead mb-5">Versions are provided in several formats: 1) either combining title and abstract screening together, or separately as title then abstract level assessments; 2) for systematic mapping or systematic review, depending on which method is used; 3) in live, editable HTML format for web-based editing, or in .Rhtml format for those comfortable with basic coding in R.</p>
+          <a class="btn btn-dark btn-xl js-scroll-trigger" href="#flowcharts">See the flow charts</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="content-section bg-primary text-white text-center" id="flowcharts">
+    <div class="container">
+      <div class="content-section-heading">
+        <h3 class="text-secondary mb-0">The flow charts</h3>
+        <h2 class="mb-5">Choose your format</h2>
+        <br>
+      </div>
+      <div class="row">
+        
+        <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+            <a class="btn btn-secondary btn-xl btn-block js-scroll-trigger" href="#smap"> Systematic map </a>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
+            <a class="btn btn-secondary btn-xl btn-block js-scroll-trigger" href="#srev">Systematic review</a>
+        </div>
+        
+        <div class="col-lg-2 col-md-6">
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Systematic Maps -->
+<section class="content-section bg-dark text-white text-center">
+  <div class="container" id="smap">
+    <div class="content-section-heading">
+      <h1>Systematic Map Flow Charts</h1>
+    </div>
+      <h5>HTML, CSS and javascript versions (no coding knowledge necessary)</h5>
+      <br>
+      <i>Choose either titles and abstracts screened together or separately</i>
+      <br>
+      <br>
+      <div class="accordion">
+        <input type="radio" name="select" class="accordion-select" checked />
+        <div class="accordion-title"><span>Title and abstract separate</span></div>
+        <div class="accordion-content"><iframe src="SM_interactive_separate.html" height="100%" width="100%" style="border:none;"></iframe></div> 
+        
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title"><span>Title and abstract combined</span></div>
+        <div class="accordion-content"><iframe src="SM_interactive_combined.html" height="100%" width="100%" style="border:none;"></iframe></div> 
+      </div>
+      <br>
+      <hr style="color:white;width:50%">
+      <br>
+      <br>
+      <div align="left">
+      <h5>Systematic map .Rhtml version - for people comfortable with R (basic knowledge only)</h5>
+      <br>
+          <h6>Instructions for use:</h6>
+          <ul>
+            <li>Select the right file (save the target file that opens in a new window, but remove the added .txt file extension):</li>
+            <ul>
+              <li>Title and abstract screening combined</li>
+              <ul>
+                <li><a href="SM/SM_TAcombined.Rhtml" target="_blank">Enter data manually</a></li>
+                <li><a href="SM/SM_TAcombined_import.Rhtml" target="_blank">Load data from a .csv file</a></li>
+              </ul>
+              <li>Title and abstract screening conducted separately</li>
+              <ul>
+                <li><a href="SM/SM_TAseparate.Rhtml" target="_blank">Enter data manually</a></li>
+                <li><a href="SM/SM_TAseparate_import" target="_blank">Load data from a .csv file</a></li>
+              </ul><br>
+            </ul>
+            <li>Open the file in R studio</li><br>
+            <li>Either enter the relevant numbers manually, or load in a .csv file containing the data as columns<br>
+            <img src="img/dataentry.png" width="30%"></li><br>
+            <li>Provide hyperlinks (`href`) for each box<br>
+            <img src="img/tooltip.png" width="30%"></li><br>
+            <li>Click the 'knit' button<br>
+            <img src="img/knit.png" width="5%"></li><br>
+            <li>The output will be saved as an HTML file</li><br>
+            <li>Embed the html in an &ltiframe&gt on your own website</li>
+          </ul>
+      </div>
+    </div>
+  </section>
+    
+  <!-- Systematic Reviews -->
+<section class="content-section bg-white text-black text-center">
+  <div class="container" id="srev">
+    <div class="content-section-heading">
+      <h1>Systematic Review Flow Charts</h1>
+    </div>
+      <h5>HTML, CSS and javascript versions (no coding knowledge necessary)</h5>
+      <br>
+      <i>Choose either titles and abstracts screened together or separately</i>
+      <br>
+      <br>
+      <div class="accordion">
+        <input type="radio" name="select" class="accordion-select" checked />
+        <div class="accordion-title"><span>Title and abstract separate</span></div>
+        <div class="accordion-content">Coming soon...<!-- <iframe src="SR_interactive_separate.html" height="100%" width="100%" style="border:none;"></iframe> --></div> 
+        
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title"><span>Title and abstract combined</span></div>
+        <div class="accordion-content">Coming soon...<!-- <iframe src="SR_interactive_combined.html" height="100%" width="100%" style="border:none;"></iframe> --></div> 
+      </div>
+      <br>
+      <hr style="color:white;width:50%">
+      <br>
+      <br>
+      <div align="left">
+      <h5>Systematic review .Rhtml version - for people comfortable with R (basic knowledge only)</h5>
+      <br>
+          <h6>Instructions for use:</h6>
+          <ul>
+            <li>Select the right file (save the target file that opens in a new window, but remove the added .txt file extension):</li>
+            <ul>
+              <li>Title and abstract screening combined</li>
+              <ul>
+                <li><a href="SR/SR_TAcombined.Rhtml" target="_blank">Enter data manually</a></li>
+                <li><a href="SR/SR_TAcombined_import.Rhtml" target="_blank">Load data from a .csv file</a></li>
+              </ul>
+              <li>Title and abstract screening conducted separately</li>
+              <ul>
+                <li><a href="SR/SR_TAseparate.Rhtml" target="_blank">Enter data manually</a></li>
+                <li><a href="SR/SR_TAseparate_import" target="_blank">Load data from a .csv file</a></li>
+              </ul><br>
+            </ul>
+            <li>Open the file in R studio</li><br>
+            <li>Either enter the relevant numbers manually, or load in a .csv file containing the data as columns<br>
+            <img src="img/dataentry.png" width="30%"></li><br>
+            <li>Provide hyperlinks (`href`) for each box<br>
+            <img src="img/tooltip.png" width="30%"></li><br>
+            <li>Click the 'knit' button<br>
+            <img src="img/knit.png" width="5%"></li><br>
+            <li>The output will be saved as an HTML file</li><br>
+            <li>Embed the html in an &ltiframe&gt on your own website</li>
+          </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="content-section bg-primary text-white" id=contact>
+    <div class="container text-center">
+      <h2 class="mb-4">Like this project?</h2><br>
+      <h4>It's been put together by me, Neal Haddaway</h4><br>
+      <a href="mailto:nealhaddaway@gmail.com" class="btn btn-xl btn-light mr-4">Email me about it!</a>
+      <a href="https://github.com/nealhaddaway/SRflowdiagram" class="btn btn-xl btn-dark">Visit the GitHub repo!</a>
+      <br>
+      <br>
+      <br>
+      <p>This is an Open Source project, with all files provided under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color:white;">CC BY 4.0 Creative Commons license</a>.<br>
+      <img src="img/CCBY.png" width="10%"><br>
+      This means that you are free to share and adapt the files,<br>
+      but you must give appropriate credit, provide a link to the license, and indicate if changes were made.</p>
+      <br>
+      Please cite as:<br>
+      <p><a href="https://www.doi.org/10.5281/zenodo.4134795" target="_blank" style="color:white;">Haddaway, NR. 2020. SRflowdiagram: flow charts for systematic reviews and maps. doi: 10.5281/zenodo.4134795.</a></p>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <ul class="list-inline mb-5">
+        <li class="list-inline-item">
+          <a class="social-link rounded-circle text-white mr-3" href="https://www.twitter.com/nealhaddaway">
+            <i class="icon-social-twitter"></i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="social-link rounded-circle text-white" href="https://github.com/nealhaddaway">
+            <i class="icon-social-github"></i>
+          </a>
+        </li>
+      </ul>
+      <p class="text-muted small mb-0">Copyright &copy; Neal R Haddaway 2020</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/stylish-portfolio.min.js"></script>
 
 </body>
+
 </html>
